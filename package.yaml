@@ -21,6 +21,9 @@ description:         Please see the README on GitHub at <https://github.com/ketz
 
 dependencies:
 - base >= 4.7 && < 5
+- say
+- text
+- vault-tool
 
 library:
   source-dirs: src

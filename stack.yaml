@@ -37,7 +37,8 @@ packages:
 # Dependency packages to be pulled from upstream that are not in the resolver
 # using the same syntax as the packages field.
 # (e.g., acme-missiles-0.3)
-# extra-deps: []
+extra-deps:
+  - vault-tool-0.1.0.1@sha256:7f8e780c01e5741f1932b644b1cd908963dfbe11ec968215a6650e9a19e2c5d4
 
 # Override default flag values for local packages and extra-deps
 # flags: {}
