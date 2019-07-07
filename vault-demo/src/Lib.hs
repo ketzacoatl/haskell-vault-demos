@@ -19,6 +19,7 @@ import Network.VaultTool
   , vaultWrite
   , VaultAddress (..)
   , VaultAuthToken (..)
+  , VaultConnection (..)
   , VaultHealth (..)
   , VaultMountedPath (..)
   , VaultSearchPath (..)
@@ -66,11 +67,15 @@ msgOne = Contact {name = "Alice", email = "alice@yahoo.com", message = "hi, here
 msgTwo :: Contact
 msgTwo = Contact {name = "Bob", email = "bob@yahoo.com", message = "hello, my message is here"}
 
+writeContactToVault :: VaultConnection -> Text -> Contact -> IO()
+writeContactToVault vc id msg = 
+  vaultWrite vc (VaultSecretPath (kvSecretMount, VaultSearchPath id)) (toJSON (VaultContact {vaultData = msg}))
+
 runDemo :: IO ()
 runDemo = do
   say "check vault status.."
   (status :: VaultHealth) <- vaultHealth vaultURL
   say $ pack $ show status
   vaultConnection <- connectToVault vaultURL vaultToken
-  vaultWrite vaultConnection (VaultSecretPath (kvSecretMount, VaultSearchPath "some-uuid1")) (toJSON (VaultContact {vaultData = msgOne}))
-  vaultWrite vaultConnection (VaultSecretPath (kvSecretMount, VaultSearchPath "some-uuid2")) (toJSON (VaultContact {vaultData = msgTwo}))
+  writeContactToVault vaultConnection "some-uuid1" msgOne
+  writeContactToVault vaultConnection "some-uuid2" msgTwo
