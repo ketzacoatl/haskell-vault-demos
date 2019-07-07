@@ -39,9 +39,6 @@ kvSecretMount = VaultMountedPath "secret"
 mySecretKey :: VaultSearchPath
 mySecretKey = VaultSearchPath "my-secret"
 
-mySecretPath :: VaultSecretPath
-mySecretPath = VaultSecretPath (kvSecretMount, mySecretKey)
-
 data Contact = Contact
        { name :: Text
        , email :: Text
@@ -65,8 +62,9 @@ instance ToJSON VaultContact where
 msgOne :: Contact
 msgOne = Contact {name = "Alice", email = "alice@yahoo.com", message = "hi, here is my message"}
 
-secretOne :: VaultContact
-secretOne = VaultContact {vaultData = msgOne}
+
+msgTwo :: Contact
+msgTwo = Contact {name = "Bob", email = "bob@yahoo.com", message = "hello, my message is here"}
 
 runDemo :: IO ()
 runDemo = do
@@ -74,4 +72,5 @@ runDemo = do
   (status :: VaultHealth) <- vaultHealth vaultURL
   say $ pack $ show status
   vaultConnection <- connectToVault vaultURL vaultToken
-  vaultWrite vaultConnection mySecretPath (toJSON secretOne)
+  vaultWrite vaultConnection (VaultSecretPath (kvSecretMount, VaultSearchPath "some-uuid1")) (toJSON (VaultContact {vaultData = msgOne}))
+  vaultWrite vaultConnection (VaultSecretPath (kvSecretMount, VaultSearchPath "some-uuid2")) (toJSON (VaultContact {vaultData = msgTwo}))
