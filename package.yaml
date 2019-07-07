@@ -20,6 +20,7 @@ extra-source-files:
 description:         Please see the README on GitHub at <https://github.com/ketzacoatl/vault-demo#readme>
 
 dependencies:
+- aeson
 - base >= 4.7 && < 5
 - say
 - text
