@@ -69,13 +69,17 @@ msgTwo = Contact {name = "Bob", email = "bob@yahoo.com", message = "hello, my me
 
 writeContactToVault :: VaultConnection -> Text -> Contact -> IO()
 writeContactToVault vc id msg = 
-  vaultWrite vc (VaultSecretPath (kvSecretMount, VaultSearchPath id)) (toJSON (VaultContact {vaultData = msg}))
+  vaultWrite vc (VaultSecretPath (kvSecretMount, VaultSearchPath ("contacts/"<>id))) (toJSON (VaultContact {vaultData = msg}))
 
 runDemo :: IO ()
 runDemo = do
   say "check vault status.."
   (status :: VaultHealth) <- vaultHealth vaultURL
   say $ pack $ show status
+  --
+  say "connecting to vault (authenticated)"
   vaultConnection <- connectToVault vaultURL vaultToken
+  --
+  say "writing some contacts to vault "
   writeContactToVault vaultConnection "some-uuid1" msgOne
   writeContactToVault vaultConnection "some-uuid2" msgTwo
