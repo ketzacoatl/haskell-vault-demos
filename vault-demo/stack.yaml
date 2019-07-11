@@ -38,6 +38,7 @@ packages:
 # using the same syntax as the packages field.
 # (e.g., acme-missiles-0.3)
 extra-deps:
+  - fakedata-0.2.2@sha256:24595200d354d47fca9c92f0e7d350decc9a6e06baaf26b155ffb04c145b0c7e
   - vault-tool-0.1.0.1@sha256:7f8e780c01e5741f1932b644b1cd908963dfbe11ec968215a6650e9a19e2c5d4
 
 # Override default flag values for local packages and extra-deps
