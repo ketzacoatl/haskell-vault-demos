@@ -22,8 +22,10 @@ description:         Please see the README on GitHub at <https://github.com/ketz
 dependencies:
 - aeson
 - base >= 4.7 && < 5
+- fakedata
 - say
 - text
+- uuid
 - vault-tool
 
 library:
